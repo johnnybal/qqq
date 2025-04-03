@@ -6,12 +6,20 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 @main
 struct LengLengApp: App {
+    @StateObject private var notificationsSystem = NotificationsSystem()
+    
+    init() {
+        FirebaseApp.configure()
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(notificationsSystem)
         }
     }
 }

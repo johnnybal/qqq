@@ -8,17 +8,38 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var notificationsSystem: NotificationsSystem
+    @State private var selectedTab = 0
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView(selection: $selectedTab) {
+            PollsView()
+                .tabItem {
+                    Label("Polls", systemImage: "list.bullet")
+                }
+                .tag(0)
+            
+            NotificationsView()
+                .tabItem {
+                    Label("Notifications", systemImage: "bell")
+                }
+                .tag(1)
+            
+            ProfileView()
+                .tabItem {
+                    Label("Profile", systemImage: "person")
+                }
+                .tag(2)
         }
-        .padding()
+        .onAppear {
+            notificationsSystem.requestPermission()
+        }
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+            .environmentObject(NotificationsSystem())
+    }
 }
