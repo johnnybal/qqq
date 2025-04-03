@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>NSContactsUsageDescription</key>
+    <string>We need access to your contacts to help you invite friends to LengLeng.</string>
+    <key>NSUserTrackingUsageDescription</key>
+    <string>This identifier will be used to deliver personalized ads to you.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>LengLeng needs access to your photos to display contact pictures.</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>sms</string>
+        <string>whatsapp</string>
+        <string>snapchat</string>
+    </array>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>lengleng</string>
+            </array>
+            <key>CFBundleURLName</key>
+            <string>com.lengleng.app</string>
+        </dict>
+    </array>
+</dict>
+</plist> 

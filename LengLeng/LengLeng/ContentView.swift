@@ -10,24 +10,25 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var notificationsSystem: NotificationsSystem
     @State private var selectedTab = 0
+    @StateObject private var userProfileSystem = UserProfileSystem()
     
     var body: some View {
         TabView(selection: $selectedTab) {
             PollsView()
                 .tabItem {
-                    Label("Polls", systemImage: "list.bullet")
+                    Label("Polls", systemImage: "chart.bar.fill")
                 }
                 .tag(0)
             
-            NotificationsView()
+            SocialView(userProfileSystem: userProfileSystem)
                 .tabItem {
-                    Label("Notifications", systemImage: "bell")
+                    Label("Social", systemImage: "person.2.fill")
                 }
                 .tag(1)
             
-            ProfileView()
+            ProfileView(profileSystem: userProfileSystem)
                 .tabItem {
-                    Label("Profile", systemImage: "person")
+                    Label("Profile", systemImage: "person.circle.fill")
                 }
                 .tag(2)
         }
