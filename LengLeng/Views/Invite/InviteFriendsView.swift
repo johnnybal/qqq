@@ -14,79 +14,86 @@ struct InviteFriendsView: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 20) {
-                // Selected Contacts List
-                if !selectedContacts.isEmpty {
-                    List {
-                        ForEach(Array(selectedContacts), id: \.id) { contact in
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(contact.name)
-                                        .font(.headline)
-                                    Text(contact.phoneNumber)
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
-                                }
-                                
-                                Spacer()
-                                
-                                Button(action: { selectedContacts.remove(contact) }) {
-                                    Image(systemName: "xmark.circle.fill")
-                                        .foregroundColor(.red)
+            ZStack {
+                VStack(spacing: 20) {
+                    // Selected Contacts List
+                    if !selectedContacts.isEmpty {
+                        List {
+                            ForEach(Array(selectedContacts), id: \.id) { contact in
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(contact.name)
+                                            .font(.headline)
+                                        Text(contact.phoneNumber)
+                                            .font(.subheadline)
+                                            .foregroundColor(.secondary)
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    Button(action: { selectedContacts.remove(contact) }) {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .foregroundColor(.red)
+                                    }
                                 }
                             }
                         }
+                        .frame(height: min(CGFloat(selectedContacts.count * 60), 300))
                     }
-                    .frame(height: min(CGFloat(selectedContacts.count * 60), 300))
-                }
-                
-                // Custom Message
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Custom Message (Optional)")
-                        .font(.headline)
                     
-                    TextEditor(text: $customMessage)
-                        .frame(height: 100)
-                        .padding(8)
-                        .background(Color(.systemGray6))
-                        .cornerRadius(8)
-                }
-                .padding(.horizontal)
-                
-                // Add Contacts Button
-                Button(action: { showingContactPicker = true }) {
-                    HStack {
-                        Image(systemName: "person.badge.plus")
-                        Text("Add Contacts")
+                    // Custom Message
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Custom Message (Optional)")
+                            .font(.headline)
+                        
+                        TextEditor(text: $customMessage)
+                            .frame(height: 100)
+                            .padding(8)
+                            .background(Color(.systemGray6))
+                            .cornerRadius(8)
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(12)
-                }
-                .padding(.horizontal)
-                
-                // Send Invites Button
-                if !selectedContacts.isEmpty {
-                    Button(action: sendInvites) {
-                        if isSending {
-                            ProgressView()
-                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        } else {
-                            Text("Send \(selectedContacts.count) Invite\(selectedContacts.count > 1 ? "s" : "")")
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.green)
-                    .foregroundColor(.white)
-                    .cornerRadius(12)
-                    .disabled(isSending)
                     .padding(.horizontal)
+                    
+                    // Add Contacts Button
+                    Button(action: { showingContactPicker = true }) {
+                        HStack {
+                            Image(systemName: "person.badge.plus")
+                            Text("Add Contacts")
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(12)
+                    }
+                    .padding(.horizontal)
+                    
+                    // Send Invites Button
+                    if !selectedContacts.isEmpty {
+                        Button(action: sendInvites) {
+                            if isSending {
+                                ProgressView()
+                                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            } else {
+                                Text("Send \(selectedContacts.count) Invite\(selectedContacts.count > 1 ? "s" : "")")
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.green)
+                        .foregroundColor(.white)
+                        .cornerRadius(12)
+                        .disabled(isSending)
+                        .padding(.horizontal)
+                    }
+                    
+                    Spacer()
                 }
                 
-                Spacer()
+                if invitationService.isLoading {
+                    ProgressView("Loading...")
+                        .progressViewStyle(CircularProgressViewStyle())
+                }
             }
             .navigationTitle("Invite Friends")
             .navigationBarTitleDisplayMode(.inline)
@@ -104,6 +111,12 @@ struct InviteFriendsView: View {
                 Button("OK", role: .cancel) {}
             } message: { message in
                 Text(message)
+            }
+            .onChange(of: invitationService.error) { error in
+                if let error = error {
+                    errorMessage = error.localizedDescription
+                    showingError = true
+                }
             }
         }
     }
@@ -123,9 +136,7 @@ struct InviteFriendsView: View {
                     )
                     
                     if !success {
-                        throw NSError(domain: "InviteFriendsView", code: -1, userInfo: [
-                            NSLocalizedDescriptionKey: "Failed to send invite to \(contact.name)"
-                        ])
+                        throw InvitationError.sendFailed
                     }
                 }
                 

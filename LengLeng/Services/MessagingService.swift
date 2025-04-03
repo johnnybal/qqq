@@ -4,6 +4,7 @@ import UIKit
 
 class MessagingService: NSObject, MFMessageComposeViewControllerDelegate {
     private var completionHandler: ((Bool) -> Void)?
+    private var messageVC: MFMessageComposeViewController?
     
     func sendInvitation(to contact: ContactToInvite, message: String, inviteLink: String) async throws -> Bool {
         return try await withCheckedThrowingContinuation { continuation in
@@ -14,7 +15,9 @@ class MessagingService: NSObject, MFMessageComposeViewControllerDelegate {
                     messageVC.recipients = [contact.phoneNumber]
                     messageVC.body = "\(message)\n\n\(inviteLink)"
                     
+                    self.messageVC = messageVC
                     self.completionHandler = { success in
+                        self.cleanup()
                         continuation.resume(returning: success)
                     }
                     
@@ -23,6 +26,7 @@ class MessagingService: NSObject, MFMessageComposeViewControllerDelegate {
                        let rootViewController = windowScene.windows.first?.rootViewController {
                         rootViewController.present(messageVC, animated: true)
                     } else {
+                        self.cleanup()
                         continuation.resume(throwing: NSError(domain: "MessagingService", code: -1, userInfo: [
                             NSLocalizedDescriptionKey: "Could not present message composer"
                         ]))
@@ -59,5 +63,16 @@ class MessagingService: NSObject, MFMessageComposeViewControllerDelegate {
            let rootViewController = windowScene.windows.first?.rootViewController {
             rootViewController.present(activityVC, animated: true)
         }
+    }
+    
+    // MARK: - Cleanup
+    
+    private func cleanup() {
+        messageVC = nil
+        completionHandler = nil
+    }
+    
+    deinit {
+        cleanup()
     }
 } 

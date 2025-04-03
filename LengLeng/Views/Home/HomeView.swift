@@ -5,6 +5,7 @@ struct HomeView: View {
     @EnvironmentObject var socialGraphService: SocialGraphSystem
     @StateObject private var invitationService: InvitationService
     @State private var showingInviteSheet = false
+    @State private var showingSubscriptionStatus = false
     
     init() {
         // Initialize with temporary services that will be updated in onAppear
@@ -18,57 +19,59 @@ struct HomeView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
-                    // Invites Section
-                    VStack(alignment: .leading, spacing: 10) {
+                    // Subscription Status Button
+                    Button(action: { showingSubscriptionStatus = true }) {
                         HStack {
-                            Text("Your Invites")
-                                .font(.headline)
+                            Image(systemName: subscriptionService.isSubscribed ? "star.fill" : "star")
+                                .foregroundColor(subscriptionService.isSubscribed ? .yellow : .gray)
+                            
+                            Text(subscriptionService.isSubscribed ? "Power Mode Active" : "Upgrade to Power Mode")
+                                .fontWeight(.semibold)
                             
                             Spacer()
                             
-                            NavigationLink(destination: InviteHistoryView(invitationService: invitationService)) {
-                                Text("View History")
-                                    .font(.subheadline)
-                                    .foregroundColor(.blue)
-                            }
+                            Image(systemName: "chevron.right")
+                                .font(.caption)
+                                .foregroundColor(.gray)
                         }
+                        .padding()
+                        .background(Color(.systemBackground))
+                        .cornerRadius(12)
+                        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    
+                    // Invites Section
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Recent Invites")
+                            .font(.headline)
                         
                         if invitationService.isLoading {
                             ProgressView()
-                        } else {
-                            Text("\(invitationService.availableInvites) invites remaining")
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .padding()
+                        } else if invitationService.recentInvites.isEmpty {
+                            Text("No invites sent yet")
                                 .foregroundColor(.secondary)
-                            
-                            if !invitationService.recentInvites.isEmpty {
-                                ForEach(invitationService.recentInvites.prefix(3)) { invite in
-                                    InviteRow(invitation: invite)
-                                }
-                                
-                                if invitationService.recentInvites.count > 3 {
-                                    NavigationLink(destination: InviteHistoryView(invitationService: invitationService)) {
-                                        Text("View All \(invitationService.recentInvites.count) Invites")
-                                            .font(.subheadline)
-                                            .foregroundColor(.blue)
-                                            .frame(maxWidth: .infinity, alignment: .center)
-                                            .padding(.top, 8)
-                                    }
-                                }
-                            } else {
-                                Text("No recent invites")
-                                    .foregroundColor(.secondary)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .padding()
+                        } else {
+                            ForEach(invitationService.recentInvites) { invite in
+                                InviteRow(invite: invite)
                             }
                         }
                     }
                     .padding()
                     .background(Color(.systemBackground))
                     .cornerRadius(12)
-                    .shadow(radius: 2)
+                    .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
                     
                     // Invite Friends Button
                     Button(action: { showingInviteSheet = true }) {
                         HStack {
                             Image(systemName: "person.badge.plus")
                             Text("Invite Friends")
+                                .fontWeight(.semibold)
                         }
                         .frame(maxWidth: .infinity)
                         .padding()
@@ -76,6 +79,7 @@ struct HomeView: View {
                         .foregroundColor(.white)
                         .cornerRadius(12)
                     }
+                    .padding(.horizontal)
                 }
                 .padding()
             }
@@ -83,32 +87,31 @@ struct HomeView: View {
             .sheet(isPresented: $showingInviteSheet) {
                 InviteFriendsView(invitationService: invitationService)
             }
-        }
-        .onAppear {
-            // Update the invitation service with the environment objects
-            invitationService.updateServices(
-                userService: userService,
-                socialGraphService: socialGraphService
-            )
+            .sheet(isPresented: $showingSubscriptionStatus) {
+                SubscriptionStatusView()
+            }
+            .onAppear {
+                invitationService.updateServices(userService: userService, socialGraphService: socialGraphService)
+            }
         }
     }
 }
 
 struct InviteRow: View {
-    let invitation: Invitation
+    let invite: Invitation
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(invitation.recipientName)
+            Text(invite.recipientName)
                 .font(.subheadline)
                 .fontWeight(.medium)
             
-            Text(invitation.message)
+            Text(invite.message)
                 .font(.caption)
                 .foregroundColor(.secondary)
             
             HStack {
-                Text(invitation.status.rawValue.capitalized)
+                Text(invite.status.rawValue.capitalized)
                     .font(.caption2)
                     .padding(.horizontal, 8)
                     .padding(.vertical, 4)
@@ -118,7 +121,7 @@ struct InviteRow: View {
                 
                 Spacer()
                 
-                Text(invitation.createdAt, style: .relative)
+                Text(invite.createdAt, style: .relative)
                     .font(.caption2)
                     .foregroundColor(.secondary)
             }
@@ -129,7 +132,7 @@ struct InviteRow: View {
     }
     
     private var statusColor: Color {
-        switch invitation.status {
+        switch invite.status {
         case .sent:
             return .blue
         case .clicked:
