@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { User } from 'firebase/auth';
 import { auth } from '../config/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -12,8 +13,12 @@ export const useAuth = () => {
       setLoading(false);
     });
 
-    return () => unsubscribe();
+    return unsubscribe;
   }, []);
 
-  return { user, loading };
+  const signIn = (email: string, password: string) => {
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  return { user, loading, signIn };
 }; 

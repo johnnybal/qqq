@@ -2,11 +2,10 @@ import { PlatformStats, PlatformComparison } from '../models/PlatformStats';
 
 export class PlatformStatsService {
     private static instance: PlatformStatsService;
-    private baseUrl: string;
 
-    private constructor() {
-        this.baseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3000/api';
-    }
+    // Private constructor to prevent direct instantiation
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    private constructor() {}
 
     public static getInstance(): PlatformStatsService {
         if (!PlatformStatsService.instance) {
@@ -15,47 +14,48 @@ export class PlatformStatsService {
         return PlatformStatsService.instance;
     }
 
-    public async getPlatformStats(): Promise<PlatformStats> {
-        try {
-            const response = await fetch(`${this.baseUrl}/stats/platform`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch platform stats');
-            }
-            return await response.json();
-        } catch (error) {
-            console.error('Error fetching platform stats:', error);
-            throw error;
-        }
+    public static async getPlatformStats(): Promise<PlatformStats> {
+        // TODO: Replace with actual API call
+        return {
+            ios: {
+                totalUsers: 1000,
+                activeUsers: 800,
+                newUsersLastMonth: 100
+            },
+            android: {
+                totalUsers: 1500,
+                activeUsers: 1200,
+                newUsersLastMonth: 150
+            },
+            lastUpdated: new Date().toISOString()
+        };
     }
 
-    public calculateComparison(stats: PlatformStats): PlatformComparison {
+    public static calculateComparison(stats: PlatformStats): PlatformComparison {
         const totalUsers = {
             ios: stats.ios.totalUsers,
             android: stats.android.totalUsers,
-            total: stats.ios.totalUsers + stats.android.totalUsers
+            total: stats.ios.totalUsers + stats.android.totalUsers,
+            iosPercentage: (stats.ios.totalUsers / (stats.ios.totalUsers + stats.android.totalUsers)) * 100,
+            androidPercentage: (stats.android.totalUsers / (stats.ios.totalUsers + stats.android.totalUsers)) * 100
         };
 
         const activeUsers = {
             ios: stats.ios.activeUsers,
             android: stats.android.activeUsers,
-            total: stats.ios.activeUsers + stats.android.activeUsers
+            total: stats.ios.activeUsers + stats.android.activeUsers,
+            iosPercentage: (stats.ios.activeUsers / (stats.ios.activeUsers + stats.android.activeUsers)) * 100,
+            androidPercentage: (stats.android.activeUsers / (stats.ios.activeUsers + stats.android.activeUsers)) * 100
         };
 
         const newUsers = {
             ios: stats.ios.newUsersLastMonth,
             android: stats.android.newUsersLastMonth,
-            total: stats.ios.newUsersLastMonth + stats.android.newUsersLastMonth
+            total: stats.ios.newUsersLastMonth + stats.android.newUsersLastMonth,
+            iosPercentage: (stats.ios.newUsersLastMonth / (stats.ios.newUsersLastMonth + stats.android.newUsersLastMonth)) * 100,
+            androidPercentage: (stats.android.newUsersLastMonth / (stats.ios.newUsersLastMonth + stats.android.newUsersLastMonth)) * 100
         };
 
-        const iosPercentage = (totalUsers.ios / totalUsers.total) * 100;
-        const androidPercentage = (totalUsers.android / totalUsers.total) * 100;
-
-        return {
-            totalUsers,
-            activeUsers,
-            newUsers,
-            iosPercentage,
-            androidPercentage
-        };
+        return { totalUsers, activeUsers, newUsers };
     }
 } 

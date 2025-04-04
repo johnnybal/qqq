@@ -9,7 +9,7 @@ export interface PlatformStats {
         activeUsers: number;
         newUsersLastMonth: number;
     };
-    lastUpdated: Date;
+    lastUpdated: string;
 }
 
 export interface PlatformComparison {
@@ -17,17 +17,21 @@ export interface PlatformComparison {
         ios: number;
         android: number;
         total: number;
+        iosPercentage: number;
+        androidPercentage: number;
     };
     activeUsers: {
         ios: number;
         android: number;
         total: number;
+        iosPercentage: number;
+        androidPercentage: number;
     };
     newUsers: {
         ios: number;
         android: number;
         total: number;
+        iosPercentage: number;
+        androidPercentage: number;
     };
-    iosPercentage: number;
-    androidPercentage: number;
 } 

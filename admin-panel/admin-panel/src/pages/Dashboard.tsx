@@ -8,7 +8,6 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Button,
 } from '@mui/material';
 import { useAuth } from '../hooks/useAuth';
 import { signOut } from 'firebase/auth';
@@ -75,7 +74,19 @@ const Dashboard: React.FC = () => {
               <Typography variant="h6" gutterBottom>
                 Poll Analytics
               </Typography>
-              <PollAnalytics />
+              <PollAnalytics
+                pollData={{
+                  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                  datasets: [
+                    {
+                      label: 'Polls Created',
+                      data: [12, 19, 3, 5, 2, 3],
+                      borderColor: 'rgb(75, 192, 192)',
+                      backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    },
+                  ],
+                }}
+              />
             </Paper>
           </Grid>
 
@@ -85,7 +96,18 @@ const Dashboard: React.FC = () => {
               <Typography variant="h6" gutterBottom>
                 School Analytics
               </Typography>
-              <SchoolAnalytics />
+              <SchoolAnalytics
+                schoolData={{
+                  labels: ['School A', 'School B', 'School C', 'School D', 'School E'],
+                  datasets: [
+                    {
+                      label: 'Active Users',
+                      data: [65, 59, 80, 81, 56],
+                      backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    },
+                  ],
+                }}
+              />
             </Paper>
           </Grid>
 

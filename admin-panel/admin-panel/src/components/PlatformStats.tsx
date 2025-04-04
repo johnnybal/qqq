@@ -1,35 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import {
-    Box,
-    Card,
-    CardContent,
-    Grid,
-    Typography,
-    CircularProgress,
-    useTheme
-} from '@mui/material';
-import { PlatformStats, PlatformComparison } from '../models/PlatformStats';
+import React, { useState, useEffect } from 'react';
+import { Grid, Card, CardContent, Typography, CircularProgress, Alert } from '@mui/material';
 import { PlatformStatsService } from '../services/PlatformStatsService';
+import { PlatformStats, PlatformComparison } from '../models/PlatformStats';
 
 const PlatformStatsComponent: React.FC = () => {
     const [stats, setStats] = useState<PlatformStats | null>(null);
     const [comparison, setComparison] = useState<PlatformComparison | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const theme = useTheme();
 
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const statsService = PlatformStatsService.getInstance();
-                const platformStats = await statsService.getPlatformStats();
-                const platformComparison = statsService.calculateComparison(platformStats);
-                
-                setStats(platformStats);
-                setComparison(platformComparison);
-                setLoading(false);
+                const data = await PlatformStatsService.getPlatformStats();
+                setStats(data);
+                setComparison(PlatformStatsService.calculateComparison(data));
+                setError(null);
             } catch (err) {
-                setError('Failed to load platform statistics');
+                setError('Failed to fetch platform statistics');
+                console.error(err);
+            } finally {
                 setLoading(false);
             }
         };
@@ -39,17 +29,17 @@ const PlatformStatsComponent: React.FC = () => {
 
     if (loading) {
         return (
-            <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+            <Grid container justifyContent="center" alignItems="center" style={{ minHeight: '200px' }}>
                 <CircularProgress />
-            </Box>
+            </Grid>
         );
     }
 
     if (error) {
         return (
-            <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
-                <Typography color="error">{error}</Typography>
-            </Box>
+            <Grid container justifyContent="center" style={{ marginTop: '20px' }}>
+                <Alert severity="error">{error}</Alert>
+            </Grid>
         );
     }
 
@@ -59,120 +49,46 @@ const PlatformStatsComponent: React.FC = () => {
 
     return (
         <Grid container spacing={3}>
-            {/* Total Users */}
             <Grid item xs={12} md={6}>
                 <Card>
                     <CardContent>
                         <Typography variant="h6" gutterBottom>
-                            Total Users
+                            iOS Statistics
                         </Typography>
-                        <Box display="flex" alignItems="center" mb={2}>
-                            <Box flex={1}>
-                                <Typography variant="h4">
-                                    {comparison.totalUsers.total.toLocaleString()}
-                                </Typography>
-                            </Box>
-                            <Box>
-                                <Typography color="textSecondary">
-                                    iOS: {comparison.iosPercentage.toFixed(1)}%
-                                </Typography>
-                                <Typography color="textSecondary">
-                                    Android: {comparison.androidPercentage.toFixed(1)}%
-                                </Typography>
-                            </Box>
-                        </Box>
-                        <Box display="flex" justifyContent="space-between">
-                            <Typography>
-                                iOS: {comparison.totalUsers.ios.toLocaleString()}
-                            </Typography>
-                            <Typography>
-                                Android: {comparison.totalUsers.android.toLocaleString()}
-                            </Typography>
-                        </Box>
+                        <Typography>Total Users: {stats.ios.totalUsers}</Typography>
+                        <Typography>Active Users: {stats.ios.activeUsers}</Typography>
+                        <Typography>New Users (Last Month): {stats.ios.newUsersLastMonth}</Typography>
                     </CardContent>
                 </Card>
             </Grid>
-
-            {/* Active Users */}
             <Grid item xs={12} md={6}>
                 <Card>
                     <CardContent>
                         <Typography variant="h6" gutterBottom>
-                            Active Users (Last 30 Days)
+                            Android Statistics
                         </Typography>
-                        <Box display="flex" alignItems="center" mb={2}>
-                            <Box flex={1}>
-                                <Typography variant="h4">
-                                    {comparison.activeUsers.total.toLocaleString()}
-                                </Typography>
-                            </Box>
-                            <Box>
-                                <Typography color="textSecondary">
-                                    iOS: {((comparison.activeUsers.ios / comparison.totalUsers.ios) * 100).toFixed(1)}%
-                                </Typography>
-                                <Typography color="textSecondary">
-                                    Android: {((comparison.activeUsers.android / comparison.totalUsers.android) * 100).toFixed(1)}%
-                                </Typography>
-                            </Box>
-                        </Box>
-                        <Box display="flex" justifyContent="space-between">
-                            <Typography>
-                                iOS: {comparison.activeUsers.ios.toLocaleString()}
-                            </Typography>
-                            <Typography>
-                                Android: {comparison.activeUsers.android.toLocaleString()}
-                            </Typography>
-                        </Box>
+                        <Typography>Total Users: {stats.android.totalUsers}</Typography>
+                        <Typography>Active Users: {stats.android.activeUsers}</Typography>
+                        <Typography>New Users (Last Month): {stats.android.newUsersLastMonth}</Typography>
                     </CardContent>
                 </Card>
             </Grid>
-
-            {/* New Users */}
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12}>
                 <Card>
                     <CardContent>
                         <Typography variant="h6" gutterBottom>
-                            New Users (Last 30 Days)
+                            Platform Comparison
                         </Typography>
-                        <Box display="flex" alignItems="center" mb={2}>
-                            <Box flex={1}>
-                                <Typography variant="h4">
-                                    {comparison.newUsers.total.toLocaleString()}
-                                </Typography>
-                            </Box>
-                            <Box>
-                                <Typography color="textSecondary">
-                                    iOS: {((comparison.newUsers.ios / comparison.newUsers.total) * 100).toFixed(1)}%
-                                </Typography>
-                                <Typography color="textSecondary">
-                                    Android: {((comparison.newUsers.android / comparison.newUsers.total) * 100).toFixed(1)}%
-                                </Typography>
-                            </Box>
-                        </Box>
-                        <Box display="flex" justifyContent="space-between">
-                            <Typography>
-                                iOS: {comparison.newUsers.ios.toLocaleString()}
-                            </Typography>
-                            <Typography>
-                                Android: {comparison.newUsers.android.toLocaleString()}
-                            </Typography>
-                        </Box>
+                        <Typography>Total Users: iOS {comparison.totalUsers.iosPercentage}% vs Android {comparison.totalUsers.androidPercentage}%</Typography>
+                        <Typography>Active Users: iOS {comparison.activeUsers.iosPercentage}% vs Android {comparison.activeUsers.androidPercentage}%</Typography>
+                        <Typography>New Users: iOS {comparison.newUsers.iosPercentage}% vs Android {comparison.newUsers.androidPercentage}%</Typography>
                     </CardContent>
                 </Card>
             </Grid>
-
-            {/* Last Updated */}
-            <Grid item xs={12} md={6}>
-                <Card>
-                    <CardContent>
-                        <Typography variant="h6" gutterBottom>
-                            Last Updated
-                        </Typography>
-                        <Typography variant="body1">
-                            {new Date(stats.lastUpdated).toLocaleString()}
-                        </Typography>
-                    </CardContent>
-                </Card>
+            <Grid item xs={12}>
+                <Typography variant="body2" color="textSecondary">
+                    Last Updated: {new Date(stats.lastUpdated).toLocaleString()}
+                </Typography>
             </Grid>
         </Grid>
     );

@@ -1,29 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Container,
-  Paper,
-  TextField,
-  Button,
-  Typography,
-  Box,
-} from '@mui/material';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../config/firebase';
+import { Box, Button, TextField, Typography, Container, Paper } from '@mui/material';
+import { useAuth } from '../hooks/useAuth';
 
 const Login: React.FC = () => {
-  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const { signIn } = useAuth();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate('/');
-    } catch (error) {
-      setError('Invalid email or password');
+      await signIn(email, password);
+      navigate('/dashboard');
+    } catch (err) {
+      setError('Failed to sign in. Please check your credentials.');
     }
   };
 
@@ -37,20 +30,11 @@ const Login: React.FC = () => {
           alignItems: 'center',
         }}
       >
-        <Paper
-          elevation={3}
-          sx={{
-            padding: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            width: '100%',
-          }}
-        >
-          <Typography component="h1" variant="h5">
-            Admin Login
+        <Paper elevation={3} sx={{ p: 4, width: '100%' }}>
+          <Typography component="h1" variant="h5" align="center">
+            Admin Panel Login
           </Typography>
-          <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <TextField
               margin="normal"
               required
