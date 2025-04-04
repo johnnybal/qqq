@@ -6,27 +6,27 @@ A social polling app that lets users participate in polls, receive notifications
 
 Before building the app, ensure you have the following installed:
 
-- Xcode 14.0 or later
-- iOS 16.0 or later
-- CocoaPods (for dependency management)
+- Xcode 15.0 or later
+- iOS 17.0 or later
+- Swift Package Manager (for dependency management)
 - Apple Developer Account (for device builds)
 
 ## Setup
 
 1. Clone the repository:
    ```bash
-   git clone [repository-url]
-   cd LengLeng
+   git clone https://github.com/johnnybal/qqq.git
+   cd qqq/LengLeng
    ```
 
 2. Install dependencies:
    ```bash
-   pod install
+   swift package resolve
    ```
 
-3. Open the workspace:
+3. Open the project:
    ```bash
-   open LengLeng.xcworkspace
+   open LengLeng.xcodeproj
    ```
 
 ## Building the App
@@ -104,6 +104,9 @@ Before building for devices, you need to:
 - User authentication
 - Profile management
 - Settings customization
+- Social connections
+- Invitation system
+- Subscription management
 
 ## Architecture
 
@@ -113,14 +116,38 @@ The app follows MVVM architecture with the following structure:
     - PollsView.swift (SwiftUI)
     - PollSystem.swift (UIKit)
   - Notifications/
+    - NotificationsSystem.swift
   - Profile/
+    - ProfileView.swift
+    - EditProfileView.swift
+    - SettingsView.swift
+    - UserProfileSystem.swift
+  - Social/
+    - SocialView.swift
+    - SocialGraphSystem.swift
+    - InviteFriendsView.swift
+    - SubscriptionStatusView.swift
 - Models/
   - Poll.swift
   - PollOption.swift
   - PollVote.swift
+  - User.swift
+  - Connection.swift
+  - Invitation.swift
 - Services/
   - FirebaseService.swift
+  - UserService.swift
+  - InvitationService.swift
+  - SubscriptionService.swift
 - Utils/
+
+## Dependencies
+
+- Firebase SDK 10.24.0
+  - FirebaseAuth
+  - FirebaseFirestore
+  - FirebaseMessaging
+  - FirebaseAnalytics
 
 ## Troubleshooting
 
@@ -132,9 +159,9 @@ The app follows MVVM architecture with the following structure:
    - Verify your Apple Developer account status
 
 2. **Dependencies Not Found**
-   - Run `pod install` again
-   - Check your CocoaPods version
-   - Ensure you're opening the `.xcworkspace` file, not the `.xcodeproj`
+   - Run `swift package resolve` again
+   - Check your Swift version
+   - Ensure you're opening the correct project file
 
 3. **Simulator Build Fails**
    - Check if the specified simulator exists
@@ -150,7 +177,7 @@ If you encounter any issues not covered here:
 ## Additional Resources
 
 - [Apple Developer Documentation](https://developer.apple.com/documentation/)
-- [CocoaPods Documentation](https://guides.cocoapods.org/)
+- [Swift Package Manager Documentation](https://www.swift.org/package-manager/)
 - [Xcode Build System Guide](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/XcodeBuildSystem/300-Build_System_Overview/build_system_overview.html)
 
 ## Contributing
