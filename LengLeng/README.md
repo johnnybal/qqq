@@ -2,38 +2,113 @@
 
 A social polling app that lets users create and participate in polls, receive notifications, and interact with other users.
 
-## Setup Instructions
+## Prerequisites
 
-1. **Prerequisites**
-   - Xcode 14.0 or later
-   - iOS 15.0 or later
-   - CocoaPods (optional, if using SPM)
-   - Firebase account
+Before building the app, ensure you have the following installed:
 
-2. **Firebase Setup**
-   - Create a new Firebase project at [Firebase Console](https://console.firebase.google.com)
-   - Add an iOS app to your Firebase project
-   - Download the `GoogleService-Info.plist` file
-   - Replace the placeholder `GoogleService-Info.plist` in the project with your downloaded file
-   - Enable Authentication, Firestore, and Cloud Messaging in Firebase Console
+- Xcode 14.0 or later
+- iOS 16.0 or later
+- CocoaPods (for dependency management)
+- Apple Developer Account (for device builds)
 
-3. **Project Setup**
-   - Clone the repository
-   - Open `LengLeng.xcodeproj`
-   - Update the Bundle Identifier in Xcode project settings
-   - Update the Team and Signing settings
-   - Enable Push Notifications capability
-   - Enable App Groups capability
-   - Update the App Group identifier in entitlements
+## Setup
 
-4. **Dependencies**
-   The project uses Swift Package Manager for dependencies:
-   - Firebase iOS SDK
-   - Other dependencies are managed through SPM
+1. Clone the repository:
+   ```bash
+   git clone [repository-url]
+   cd LengLeng
+   ```
 
-5. **Build and Run**
-   - Select your target device/simulator
-   - Build and run the project (⌘R)
+2. Install dependencies:
+   ```bash
+   pod install
+   ```
+
+3. Open the workspace:
+   ```bash
+   open LengLeng.xcworkspace
+   ```
+
+## Building the App
+
+The project includes a build script that supports different environments and targets. The available options are:
+
+### Environments
+- `development`: For development and testing
+- `staging`: For beta testing and internal distribution
+- `production`: For App Store distribution
+
+### Targets
+- `simulator`: For running on iOS Simulator
+- `device`: For creating IPA files for physical devices
+
+### Build Commands
+
+1. Make the build script executable:
+   ```bash
+   chmod +x scripts/build.sh
+   ```
+
+2. Run the build script with your desired environment and target:
+   ```bash
+   # For development simulator build
+   ./scripts/build.sh development simulator
+
+   # For staging device build
+   ./scripts/build.sh staging device
+
+   # For production device build
+   ./scripts/build.sh production device
+   ```
+
+### Build Outputs
+
+- Simulator builds will be available in the derived data folder
+- Device builds will create IPA files in the `build` directory
+
+## Configuration
+
+Before building for devices, you need to:
+
+1. Update the Team ID in the export options plist files:
+   - `ExportOptions-development.plist`
+   - `ExportOptions-staging.plist`
+   - `ExportOptions-production.plist`
+
+   Replace `YOUR_TEAM_ID` with your actual Apple Developer Team ID.
+
+2. Ensure your Apple Developer account has the necessary certificates and provisioning profiles.
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Build Fails with Code Signing Errors**
+   - Ensure you have valid certificates and provisioning profiles
+   - Check your Team ID in the export options plist files
+   - Verify your Apple Developer account status
+
+2. **Dependencies Not Found**
+   - Run `pod install` again
+   - Check your CocoaPods version
+   - Ensure you're opening the `.xcworkspace` file, not the `.xcodeproj`
+
+3. **Simulator Build Fails**
+   - Check if the specified simulator exists
+   - Update the simulator name in the build script if needed
+
+### Getting Help
+
+If you encounter any issues not covered here:
+1. Check the Xcode build logs
+2. Verify your environment setup
+3. Contact the development team
+
+## Additional Resources
+
+- [Apple Developer Documentation](https://developer.apple.com/documentation/)
+- [CocoaPods Documentation](https://guides.cocoapods.org/)
+- [Xcode Build System Guide](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/XcodeBuildSystem/300-Build_System_Overview/build_system_overview.html)
 
 ## Features
 
