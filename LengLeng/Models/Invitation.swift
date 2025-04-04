@@ -1,11 +1,19 @@
 import Foundation
 import FirebaseFirestore
 
-enum InvitationStatus: String, CaseIterable, Codable {
+enum InvitationStatus: String, Codable {
     case sent
     case clicked
     case installed
     case expired
+}
+
+struct Invitation: Identifiable, Codable {
+    let id: String
+    let recipientName: String
+    let message: String
+    let status: InvitationStatus
+    let createdAt: Date
 }
 
 struct Invitation: Identifiable, Codable {

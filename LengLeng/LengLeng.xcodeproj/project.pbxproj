@@ -24,9 +24,38 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		F0D784CD2D9F086800CB7D02 /* LengLeng.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LengLeng.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F0D784DB2D9F086A00CB7D02 /* LengLengTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LengLengTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F0D784E52D9F086A00CB7D02 /* LengLengUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LengLengUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		133EAC8A24B3F3B0007E7E1E /* LengLeng.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LengLeng.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		133EAC8D24B3F3B0007E7E1E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		133EAC8F24B3F3B0007E7E1E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		133EAC9124B3F3B0007E7E1E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		133EAC9324B3F3B2007E7E1E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		133EAC9624B3F3B2007E7E1E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		133EAC9824B3F3B2007E7E1E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		133EAC9A24B3F3B2007E7E1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		133EAC9F24B3F3B2007E7E1E /* LengLengTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LengLengTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		133EACA324B3F3B2007E7E1E /* LengLengTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengLengTests.swift; sourceTree = "<group>"; };
+		133EACA524B3F3B2007E7E1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		133EACAA24B3F3B2007E7E1E /* LengLengUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LengLengUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		133EACAE24B3F3B2007E7E1E /* LengLengUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengLengUITests.swift; sourceTree = "<group>"; };
+		133EACB024B3F3B2007E7E1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		133EACB524B3F3B3007E7E1E /* LengLeng.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LengLeng.entitlements; sourceTree = "<group>"; };
+		133EACB724B3F3B3007E7E1E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		133EACB924B3F3B3007E7E1E /* LengLengApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengLengApp.swift; sourceTree = "<group>"; };
+		133EACBB24B3F3B3007E7E1E /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		133EACBD24B3F3B3007E7E1E /* NotificationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationModels.swift; sourceTree = "<group>"; };
+		133EACBF24B3F3B3007E7E1E /* PollModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollModels.swift; sourceTree = "<group>"; };
+		133EACC124B3F3B3007E7E1E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		133EACC324B3F3B3007E7E1E /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		133EACD024B3F3B3007E7E1E /* SocialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialView.swift; sourceTree = "<group>"; };
+		133EACD124B3F3B3007E7E1E /* SocialGraphSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialGraphSystem.swift; sourceTree = "<group>"; };
+		133EACD224B3F3B3007E7E1E /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		133EACD324B3F3B3007E7E1E /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		133EACD424B3F3B3007E7E1E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		133EACD524B3F3B3007E7E1E /* UserProfileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileSystem.swift; sourceTree = "<group>"; };
+		133EACD624B3F3B3007E7E1E /* PollSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollSystem.swift; sourceTree = "<group>"; };
+		133EACD724B3F3B3007E7E1E /* PollsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollsView.swift; sourceTree = "<group>"; };
+		133EACD824B3F3B3007E7E1E /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		133EACD924B3F3B3007E7E1E /* NotificationsSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSystem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -72,24 +101,169 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F0D784C42D9F086800CB7D02 = {
+		133EAC7F24B3F3B0007E7E1E = {
 			isa = PBXGroup;
 			children = (
-				F0D784CF2D9F086800CB7D02 /* LengLeng */,
-				F0D784DE2D9F086A00CB7D02 /* LengLengTests */,
-				F0D784E82D9F086A00CB7D02 /* LengLengUITests */,
-				F0D784CE2D9F086800CB7D02 /* Products */,
+				133EAC8A24B3F3B0007E7E1E /* Products */,
+				133EAC8C24B3F3B0007E7E1E /* LengLeng */,
+				133EACA224B3F3B2007E7E1E /* LengLengTests */,
+				133EACAD24B3F3B2007E7E1E /* LengLengUITests */,
+				133EAC8B24B3F3B0007E7E1E /* Frameworks */,
+				133EAC9324B3F3B2007E7E1E /* Assets.xcassets */,
+				133EAC9524B3F3B2007E7E1E /* Preview Content */,
 			);
 			sourceTree = "<group>";
 		};
-		F0D784CE2D9F086800CB7D02 /* Products */ = {
+		133EAC8A24B3F3B0007E7E1E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F0D784CD2D9F086800CB7D02 /* LengLeng.app */,
-				F0D784DB2D9F086A00CB7D02 /* LengLengTests.xctest */,
-				F0D784E52D9F086A00CB7D02 /* LengLengUITests.xctest */,
+				133EAC8924B3F3B0007E7E1E /* LengLeng.app */,
+				133EAC9F24B3F3B2007E7E1E /* LengLengTests.xctest */,
+				133EACAA24B3F3B2007E7E1E /* LengLengUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		133EAC8B24B3F3B0007E7E1E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		133EAC8C24B3F3B0007E7E1E /* LengLeng */ = {
+			isa = PBXGroup;
+			children = (
+				133EACB924B3F3B3007E7E1E /* LengLengApp.swift */,
+				133EAC8D24B3F3B0007E7E1E /* AppDelegate.swift */,
+				133EAC8F24B3F3B0007E7E1E /* SceneDelegate.swift */,
+				133EAC9124B3F3B0007E7E1E /* ContentView.swift */,
+				133EACC524B3F3B3007E7E1E /* Config */,
+				133EACC624B3F3B3007E7E1E /* Features */,
+				133EACC724B3F3B3007E7E1E /* Models */,
+				133EACC824B3F3B3007E7E1E /* Services */,
+				133EACC924B3F3B3007E7E1E /* Utils */,
+				133EACB524B3F3B3007E7E1E /* LengLeng.entitlements */,
+				133EACB724B3F3B3007E7E1E /* GoogleService-Info.plist */,
+				133EAC9A24B3F3B2007E7E1E /* Info.plist */,
+			);
+			path = LengLeng;
+			sourceTree = "<group>";
+		};
+		133EACC524B3F3B3007E7E1E /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				133EACC324B3F3B3007E7E1E /* AppConfig.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		133EACC624B3F3B3007E7E1E /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				133EACCA24B3F3B3007E7E1E /* Social */,
+				133EACCB24B3F3B3007E7E1E /* Profile */,
+				133EACCC24B3F3B3007E7E1E /* Polls */,
+				133EACCD24B3F3B3007E7E1E /* Onboarding */,
+				133EACCE24B3F3B3007E7E1E /* Notifications */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		133EACC724B3F3B3007E7E1E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				133EACBD24B3F3B3007E7E1E /* NotificationModels.swift */,
+				133EACBF24B3F3B3007E7E1E /* PollModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		133EACC824B3F3B3007E7E1E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				133EACBB24B3F3B3007E7E1E /* FirebaseService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		133EACC924B3F3B3007E7E1E /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				133EACC124B3F3B3007E7E1E /* Extensions.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		133EAC9524B3F3B2007E7E1E /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				133EAC9624B3F3B2007E7E1E /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		133EACA224B3F3B2007E7E1E /* LengLengTests */ = {
+			isa = PBXGroup;
+			children = (
+				133EACA324B3F3B2007E7E1E /* LengLengTests.swift */,
+				133EACA524B3F3B2007E7E1E /* Info.plist */,
+			);
+			path = LengLengTests;
+			sourceTree = "<group>";
+		};
+		133EACAD24B3F3B2007E7E1E /* LengLengUITests */ = {
+			isa = PBXGroup;
+			children = (
+				133EACAE24B3F3B2007E7E1E /* LengLengUITests.swift */,
+				133EACB024B3F3B2007E7E1E /* Info.plist */,
+			);
+			path = LengLengUITests;
+			sourceTree = "<group>";
+		};
+		133EACCA24B3F3B3007E7E1E /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				133EACD024B3F3B3007E7E1E /* SocialView.swift */,
+				133EACD124B3F3B3007E7E1E /* SocialGraphSystem.swift */,
+			);
+			path = Social;
+			sourceTree = "<group>";
+		};
+		133EACCB24B3F3B3007E7E1E /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				133EACD224B3F3B3007E7E1E /* ProfileView.swift */,
+				133EACD324B3F3B3007E7E1E /* EditProfileView.swift */,
+				133EACD424B3F3B3007E7E1E /* SettingsView.swift */,
+				133EACD524B3F3B3007E7E1E /* UserProfileSystem.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		133EACCC24B3F3B3007E7E1E /* Polls */ = {
+			isa = PBXGroup;
+			children = (
+				133EACD624B3F3B3007E7E1E /* PollSystem.swift */,
+				133EACD724B3F3B3007E7E1E /* PollsView.swift */,
+			);
+			path = Polls;
+			sourceTree = "<group>";
+		};
+		133EACCD24B3F3B3007E7E1E /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				133EACD824B3F3B3007E7E1E /* OnboardingViewController.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		133EACCE24B3F3B3007E7E1E /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				133EACD924B3F3B3007E7E1E /* NotificationsSystem.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,24 +406,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		F0D784C92D9F086800CB7D02 /* Sources */ = {
+		133EAC8624B3F3B0007E7E1E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F0D784D72D9F086A00CB7D02 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F0D784E12D9F086A00CB7D02 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				133EACB824B3F3B3007E7E1E /* LengLengApp.swift in Sources */,
+				133EAC8E24B3F3B0007E7E1E /* AppDelegate.swift in Sources */,
+				133EAC9024B3F3B0007E7E1E /* SceneDelegate.swift in Sources */,
+				133EAC9224B3F3B0007E7E1E /* ContentView.swift in Sources */,
+				133EACBC24B3F3B3007E7E1E /* FirebaseService.swift in Sources */,
+				133EACBE24B3F3B3007E7E1E /* NotificationModels.swift in Sources */,
+				133EACC024B3F3B3007E7E1E /* PollModels.swift in Sources */,
+				133EACC224B3F3B3007E7E1E /* Extensions.swift in Sources */,
+				133EACC424B3F3B3007E7E1E /* AppConfig.swift in Sources */,
+				133EACDA24B3F3B3007E7E1E /* SocialView.swift in Sources */,
+				133EACDB24B3F3B3007E7E1E /* SocialGraphSystem.swift in Sources */,
+				133EACDC24B3F3B3007E7E1E /* ProfileView.swift in Sources */,
+				133EACDD24B3F3B3007E7E1E /* EditProfileView.swift in Sources */,
+				133EACDE24B3F3B3007E7E1E /* SettingsView.swift in Sources */,
+				133EACDF24B3F3B3007E7E1E /* UserProfileSystem.swift in Sources */,
+				133EACE024B3F3B3007E7E1E /* PollSystem.swift in Sources */,
+				133EACE124B3F3B3007E7E1E /* PollsView.swift in Sources */,
+				133EACE224B3F3B3007E7E1E /* OnboardingViewController.swift in Sources */,
+				133EACE324B3F3B3007E7E1E /* NotificationsSystem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

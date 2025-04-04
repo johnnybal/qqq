@@ -49,6 +49,7 @@ class InvitationService: ObservableObject {
     func updateServices(userService: UserService, socialGraphService: SocialGraphSystem) {
         self.userService = userService
         self.socialGraphService = socialGraphService
+        fetchRecentInvites()
     }
     
     // MARK: - Invite Management
@@ -100,6 +101,45 @@ class InvitationService: ObservableObject {
                     guard let documents = snapshot?.documents else { return }
                     let invites = documents.compactMap { Invitation.from($0) }
                     self?.recentInvites = invites
+                }
+            }
+    }
+    
+    func fetchRecentInvites() {
+        guard let userId = userService.currentUser?.id else { return }
+        
+        isLoading = true
+        
+        db.collection("invitations")
+            .whereField("senderId", isEqualTo: userId)
+            .order(by: "createdAt", descending: true)
+            .limit(to: 10)
+            .getDocuments { [weak self] (snapshot, error) in
+                self?.isLoading = false
+                
+                if let error = error {
+                    self?.error = .firebaseError(error)
+                    return
+                }
+                
+                if let documents = snapshot?.documents {
+                    self?.recentInvites = documents.compactMap { document in
+                        guard let data = document.data() as? [String: Any],
+                              let recipientName = data["recipientName"] as? String,
+                              let message = data["message"] as? String,
+                              let statusRaw = data["status"] as? String,
+                              let createdAt = data["createdAt"] as? Timestamp else {
+                            return nil
+                        }
+                        
+                        return Invitation(
+                            id: document.documentID,
+                            recipientName: recipientName,
+                            message: message,
+                            status: InvitationStatus(rawValue: statusRaw) ?? .sent,
+                            createdAt: createdAt.dateValue()
+                        )
+                    }
                 }
             }
     }

@@ -53,15 +53,22 @@ class SubscriptionService: ObservableObject {
     @Published var freeTrialEligible = false
     @Published var pollsVotedForTrial = 0
     
+    private var subscriptionStatusTask: Task<Void, Never>?
+    
     private init() {
         setupStoreKit()
         loadSubscriptionStatus()
         checkFreeTrialEligibility()
+        
+        subscriptionStatusTask = Task {
+            await updateSubscriptionStatus()
+        }
     }
     
     deinit {
         updateListenerTask?.cancel()
         transactionListenerTask?.cancel()
+        subscriptionStatusTask?.cancel()
     }
     
     // MARK: - StoreKit Setup
@@ -137,7 +144,32 @@ class SubscriptionService: ObservableObject {
         }
     }
     
-    func purchaseSubscription(product: Product) async throws {
+    @MainActor
+    private func updateSubscriptionStatus() async {
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            var hasActiveSubscription = false
+            
+            for await result in Transaction.currentEntitlements {
+                guard case .verified(let transaction) = result else {
+                    continue
+                }
+                
+                if transaction.productType == .autoRenewable {
+                    hasActiveSubscription = true
+                    break
+                }
+            }
+            
+            isSubscribed = hasActiveSubscription
+        } catch {
+            self.error = error as? SubscriptionError
+        }
+    }
+    
+    func purchase(_ product: Product) async {
         isLoading = true
         defer { isLoading = false }
         
@@ -146,16 +178,24 @@ class SubscriptionService: ObservableObject {
             
             switch result {
             case .success(let verification):
-                await handleTransactionResult(verification)
+                guard case .verified(let transaction) = verification else {
+                    return
+                }
+                
+                await transaction.finish()
+                await updateSubscriptionStatus()
+                
             case .userCancelled:
-                throw SubscriptionError.purchaseFailed
+                break
+                
             case .pending:
-                throw SubscriptionError.purchaseFailed
+                break
+                
             @unknown default:
-                throw SubscriptionError.unknown
+                break
             }
         } catch {
-            throw SubscriptionError.purchaseFailed
+            self.error = error as? SubscriptionError
         }
     }
     
@@ -170,7 +210,7 @@ class SubscriptionService: ObservableObject {
             
             if isValid {
                 // Update the user's subscription status
-                await updateSubscriptionStatus(for: transaction)
+                await updateSubscriptionStatus()
                 
                 // Finish the transaction
                 await transaction.finish()
