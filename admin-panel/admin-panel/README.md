@@ -6,8 +6,8 @@ A web-based admin dashboard for managing the QQQ application. This dashboard pro
 
 Before building the admin panel, ensure you have the following installed:
 
-- Node.js (v14 or higher)
-- npm (v6 or higher)
+- Node.js (v18 or higher)
+- npm (v9 or higher)
 - Firebase project credentials
 - Git
 
@@ -15,8 +15,8 @@ Before building the admin panel, ensure you have the following installed:
 
 1. Clone the repository:
    ```bash
-   git clone [repository-url]
-   cd qqq/admin-panel
+   git clone https://github.com/johnnybal/qqq.git
+   cd qqq/admin-panel/admin-panel
    ```
 
 2. Install dependencies:
@@ -72,6 +72,42 @@ The project supports different environments for building. The available options 
 - Development builds run on `http://localhost:3000`
 - Staging and production builds create files in the `build` directory
 
+## Features
+
+### User Management
+- View and manage user profiles
+- Monitor user activity
+- Handle user reports
+- Manage user permissions
+
+### Analytics
+- View usage statistics
+- Monitor poll participation
+- Track user engagement
+- Generate reports
+
+### System Configuration
+- Manage app settings
+- Configure notification templates
+- Update content moderation rules
+- Set up maintenance windows
+
+### Security
+- Role-based access control
+- Audit logging
+- Security monitoring
+- Vulnerability management
+
+## Dependencies
+
+- React 18.x
+- Material-UI 5.x
+- Firebase SDK 10.x
+- React Router 6.x
+- Axios
+- Chart.js
+- Date-fns
+
 ## Deployment
 
 ### Firebase Hosting
@@ -103,121 +139,59 @@ The project supports different environments for building. The available options 
    firebase deploy --project production-project-id
    ```
 
-## Features
+## Security
 
-- **User Analytics**
-  - User growth metrics
-  - Engagement statistics
-  - User behavior analysis
+The admin panel implements several security measures:
 
-- **Poll Analytics**
-  - Poll creation trends
-  - Voting patterns
-  - Popular poll categories
+1. Authentication:
+   - Firebase Authentication
+   - Role-based access control
+   - Session management
 
-- **School Analytics**
-  - School participation metrics
-  - Regional engagement data
-  - School-specific insights
+2. Data Protection:
+   - Environment variable encryption
+   - Secure API endpoints
+   - Input validation
 
-- **User Management**
-  - User account management
-  - Role-based access control
-  - User activity monitoring
-
-- **System Configuration**
-  - Feature toggles
-  - System settings
-  - Maintenance mode control
-
-## Architecture
-
-The admin panel follows a modern React architecture with the following structure:
-- `src/`
-  - `components/`: Reusable UI components
-  - `pages/`: Main application pages
-  - `services/`: API and Firebase services
-  - `hooks/`: Custom React hooks
-  - `utils/`: Utility functions
-  - `context/`: React context providers
-  - `types/`: TypeScript type definitions
-
-## Testing
-
-### Running Tests
-
-1. Run all tests:
-   ```bash
-   npm test
-   ```
-
-2. Run tests in watch mode:
-   ```bash
-   npm test -- --watch
-   ```
-
-3. Generate test coverage report:
-   ```bash
-   npm test -- --coverage
-   ```
-
-### Testing Guidelines
-
-- Write tests for all new features
-- Maintain test coverage above 80%
-- Use React Testing Library for component tests
-- Mock Firebase services in tests
+3. Monitoring:
+   - Activity logging
+   - Error tracking
+   - Security alerts
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Firebase Authentication Issues**
-   - Verify Firebase configuration in `.env`
-   - Check Firebase project settings
-   - Ensure proper Firebase rules are set
-
-2. **Build Failures**
+1. **Build Fails**
+   - Check Node.js version
    - Clear npm cache: `npm cache clean --force`
    - Delete node_modules and reinstall
-   - Check for version conflicts in package.json
 
-3. **Development Server Issues**
-   - Check if port 3000 is available
-   - Verify Node.js version compatibility
-   - Check for syntax errors in code
+2. **Firebase Connection Issues**
+   - Verify Firebase credentials
+   - Check network connectivity
+   - Ensure Firebase project is active
+
+3. **Authentication Problems**
+   - Verify user permissions
+   - Check Firebase Authentication settings
+   - Clear browser cache
 
 ### Getting Help
 
-If you encounter issues not covered here:
-1. Check the browser console for errors
-2. Review the Firebase console logs
+If you encounter any issues not covered here:
+1. Check the browser console
+2. Review Firebase logs
 3. Contact the development team
 
 ## Contributing
 
 1. Fork the repository
-2. Create your feature branch:
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-3. Commit your changes:
-   ```bash
-   git commit -m 'Add some feature'
-   ```
-4. Push to the branch:
-   ```bash
-   git push origin feature/your-feature-name
-   ```
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
 5. Create a Pull Request
-
-## Additional Resources
-
-- [React Documentation](https://reactjs.org/docs/getting-started.html)
-- [Firebase Documentation](https://firebase.google.com/docs)
-- [Material-UI Documentation](https://mui.com/getting-started/installation/)
-- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 
 ## License
 
-This project is proprietary and confidential. Unauthorized copying, modification, distribution, or use of this software is strictly prohibited. 
+This project is licensed under the MIT License - see the LICENSE file for details. 
