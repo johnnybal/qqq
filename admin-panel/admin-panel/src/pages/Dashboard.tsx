@@ -17,6 +17,7 @@ import UserAnalytics from '../components/analytics/UserAnalytics';
 import PollAnalytics from '../components/analytics/PollAnalytics';
 import SchoolAnalytics from '../components/analytics/SchoolAnalytics';
 import LogoutIcon from '@mui/icons-material/Logout';
+import PlatformStatsComponent from '../components/PlatformStats';
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
@@ -85,6 +86,15 @@ const Dashboard: React.FC = () => {
                 School Analytics
               </Typography>
               <SchoolAnalytics />
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Paper sx={{ p: 2 }}>
+              <Typography variant="h5" gutterBottom>
+                Platform Statistics
+              </Typography>
+              <PlatformStatsComponent />
             </Paper>
           </Grid>
         </Grid>
