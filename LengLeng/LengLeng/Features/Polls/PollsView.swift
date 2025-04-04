@@ -2,22 +2,17 @@ import SwiftUI
 
 struct PollsView: View {
     @StateObject private var viewModel = PollsViewModel()
-    @State private var showingCreatePoll = false
     
     var body: some View {
         NavigationView {
             List(viewModel.polls) { poll in
-                PollCell(poll: poll)
+                PollCell(poll: poll, onVote: { optionId in
+                    Task {
+                        await viewModel.voteOnPoll(pollId: poll.id, optionId: optionId)
+                    }
+                })
             }
             .navigationTitle("Polls")
-            .toolbar {
-                Button(action: { showingCreatePoll = true }) {
-                    Image(systemName: "plus")
-                }
-            }
-            .sheet(isPresented: $showingCreatePoll) {
-                CreatePollView()
-            }
             .refreshable {
                 await viewModel.fetchPolls()
             }
@@ -27,19 +22,38 @@ struct PollsView: View {
 
 struct PollCell: View {
     let poll: Poll
+    let onVote: (String) -> Void
+    @State private var selectedOption: String?
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 12) {
             Text(poll.question)
                 .font(.headline)
+                .padding(.bottom, 4)
             
             ForEach(poll.options, id: \.id) { option in
-                HStack {
-                    Text(option.text)
-                    Spacer()
-                    Text("\(Int((Double(option.voteCount) / Double(poll.totalVotes)) * 100))%")
-                        .foregroundColor(.secondary)
+                Button(action: {
+                    if selectedOption == nil {
+                        selectedOption = option.id
+                        onVote(option.id)
+                    }
+                }) {
+                    HStack {
+                        Text(option.text)
+                            .foregroundColor(selectedOption == option.id ? .white : .primary)
+                        Spacer()
+                        if poll.totalVotes > 0 {
+                            Text("\(Int((Double(option.voteCount) / Double(poll.totalVotes)) * 100))%")
+                                .foregroundColor(selectedOption == option.id ? .white : .secondary)
+                        }
+                    }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(selectedOption == option.id ? Color.blue : Color.gray.opacity(0.1))
+                    )
                 }
+                .disabled(selectedOption != nil)
             }
             
             HStack {
@@ -53,6 +67,7 @@ struct PollCell: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
+            .padding(.top, 8)
         }
         .padding(.vertical, 8)
     }
@@ -75,6 +90,20 @@ class PollsViewModel: ObservableObject {
                 self?.polls = polls
             case .failure(let error):
                 print("Error fetching polls: \(error)")
+            }
+        }
+    }
+    
+    @MainActor
+    func voteOnPoll(pollId: String, optionId: String) async {
+        FirebaseService.shared.voteOnPoll(pollId: pollId, optionId: optionId) { [weak self] result in
+            switch result {
+            case .success:
+                Task {
+                    await self?.fetchPolls()
+                }
+            case .failure(let error):
+                print("Error voting on poll: \(error)")
             }
         }
     }

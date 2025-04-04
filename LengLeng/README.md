@@ -1,6 +1,6 @@
 # LengLeng iOS App
 
-A social polling app that lets users create and participate in polls, receive notifications, and interact with other users.
+A social polling app that lets users participate in polls, receive notifications, and interact with other users.
 
 ## Prerequisites
 
@@ -79,6 +79,49 @@ Before building for devices, you need to:
 
 2. Ensure your Apple Developer account has the necessary certificates and provisioning profiles.
 
+## Features
+
+### Polls
+- View and participate in polls
+- Real-time vote counting
+- Visual feedback for selected options
+- Poll categories and expiration tracking
+- Pull-to-refresh for latest polls
+
+### User Experience
+- Clean and intuitive interface
+- Smooth voting animations
+- Percentage-based results display
+- Category-based organization
+- Time remaining indicators
+
+### Notifications
+- Push notifications for poll updates
+- Match notifications
+- System alerts
+
+### User Management
+- User authentication
+- Profile management
+- Settings customization
+
+## Architecture
+
+The app follows MVVM architecture with the following structure:
+- Features/
+  - Polls/
+    - PollsView.swift (SwiftUI)
+    - PollSystem.swift (UIKit)
+  - Notifications/
+  - Profile/
+- Models/
+  - Poll.swift
+  - PollOption.swift
+  - PollVote.swift
+- Services/
+  - FirebaseService.swift
+- Utils/
+
 ## Troubleshooting
 
 ### Common Issues
@@ -109,26 +152,6 @@ If you encounter any issues not covered here:
 - [Apple Developer Documentation](https://developer.apple.com/documentation/)
 - [CocoaPods Documentation](https://guides.cocoapods.org/)
 - [Xcode Build System Guide](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/XcodeBuildSystem/300-Build_System_Overview/build_system_overview.html)
-
-## Features
-
-- User Authentication
-- Poll Creation and Voting
-- Push Notifications
-- User Profiles
-- Settings Management
-
-## Architecture
-
-The app follows MVVM architecture with the following structure:
-- Features/
-  - Notifications/
-  - Polls/
-  - Onboarding/
-  - Profile/
-- Models/
-- Services/
-- Utils/
 
 ## Contributing
 
