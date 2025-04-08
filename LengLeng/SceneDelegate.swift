@@ -8,18 +8,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        let contentView = HomeView()
-            .environmentObject(UserService())
-            .environmentObject(SocialGraphSystem())
-        
-        window.rootViewController = UIHostingController(rootView: contentView)
+        window.rootViewController = UIHostingController(rootView: ContentView())
         self.window = window
         window.makeKeyAndVisible()
     }
-
-    func sceneDidDisconnect(_ scene: UIScene) {}
-    func sceneDidBecomeActive(_ scene: UIScene) {}
-    func sceneWillResignActive(_ scene: UIScene) {}
-    func sceneWillEnterForeground(_ scene: UIScene) {}
-    func sceneDidEnterBackground(_ scene: UIScene) {}
 } 

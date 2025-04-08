@@ -1,0 +1,24 @@
+name: LengLeng
+options:
+  bundleIdPrefix: com.lengleng
+  deploymentTarget:
+    iOS: 15.0
+targets:
+  LengLeng:
+    type: application
+    platform: iOS
+    sources:
+      - path: LengLeng
+    settings:
+      base:
+        INFOPLIST_FILE: LengLeng/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.lengleng.app
+    dependencies:
+      - sdk: SwiftUI.framework
+      - sdk: UIKit.framework
+      - package: https://github.com/firebase/firebase-ios-sdk.git
+        version: 11.11.0
+        products:
+          - FirebaseAuth
+          - FirebaseFirestore
+          - FirebaseStorage 

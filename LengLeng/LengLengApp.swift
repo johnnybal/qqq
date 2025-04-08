@@ -3,22 +3,24 @@ import FirebaseCore
 
 @main
 struct LengLengApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject private var userService = UserService()
-    @StateObject private var socialGraphService = SocialGraphSystem()
+    @StateObject private var authService = AuthenticationService.shared
+    @StateObject private var firestoreService = FirestoreService.shared
+    
+    init() {
+        FirebaseApp.configure()
+    }
     
     var body: some Scene {
         WindowGroup {
-            HomeView()
-                .environmentObject(userService)
-                .environmentObject(socialGraphService)
+            if authService.isAuthenticated {
+                ContentView()
+                    .environmentObject(authService)
+                    .environmentObject(firestoreService)
+            } else {
+                AuthenticationView()
+                    .environmentObject(authService)
+                    .environmentObject(firestoreService)
+            }
         }
-    }
-}
-
-class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        FirebaseApp.configure()
-        return true
     }
 } 
