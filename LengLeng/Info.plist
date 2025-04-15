@@ -37,17 +37,15 @@
             </array>
         </dict>
     </dict>
-    <key>UILaunchStoryboardName</key>
-    <string>LaunchScreen</string>
+    <key>UILaunchScreen</key>
+    <dict/>
     <key>UIRequiredDeviceCapabilities</key>
     <array>
-        <string>armv7</string>
+        <string>arm64</string>
     </array>
     <key>UISupportedInterfaceOrientations</key>
     <array>
         <string>UIInterfaceOrientationPortrait</string>
-        <string>UIInterfaceOrientationLandscapeLeft</string>
-        <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
     <key>UISupportedInterfaceOrientations~ipad</key>
     <array>
@@ -55,29 +53,6 @@
         <string>UIInterfaceOrientationPortraitUpsideDown</string>
         <string>UIInterfaceOrientationLandscapeLeft</string>
         <string>UIInterfaceOrientationLandscapeRight</string>
-    </array>
-    <key>NSContactsUsageDescription</key>
-    <string>We need access to your contacts to help you invite friends to LengLeng.</string>
-    <key>NSUserTrackingUsageDescription</key>
-    <string>This identifier will be used to deliver personalized ads to you.</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>LengLeng needs access to your photos to display contact pictures.</string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>sms</string>
-        <string>whatsapp</string>
-        <string>snapchat</string>
-    </array>
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>lengleng</string>
-            </array>
-            <key>CFBundleURLName</key>
-            <string>com.lengleng.app</string>
-        </dict>
     </array>
 </dict>
 </plist> 

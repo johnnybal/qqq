@@ -1,24 +1,35 @@
 import { useState, useEffect } from 'react';
-import { User } from 'firebase/auth';
-import { auth } from '../config/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+  User,
+  UserCredential,
+} from 'firebase/auth';
+import { app } from '../config/firebase';
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const auth = getAuth(app);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false);
     });
 
-    return unsubscribe;
-  }, []);
+    return () => unsubscribe();
+  }, [auth]);
 
-  const signIn = (email: string, password: string) => {
+  const signIn = async (email: string, password: string): Promise<UserCredential> => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  return { user, loading, signIn };
+  const logout = async (): Promise<void> => {
+    await signOut(auth);
+  };
+
+  return { user, loading, signIn, logout };
 }; 
